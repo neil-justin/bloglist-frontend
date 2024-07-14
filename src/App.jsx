@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import blogService from './services/blogs'
+import { getAll, setToken } from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 
@@ -9,10 +9,9 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  console.log(user)
 
   useEffect(() => {
-    blogService.getAll()
+    getAll()
       .then(blogs =>
         setBlogs(blogs)
       )
@@ -26,10 +25,15 @@ const App = () => {
         username, password,
       })
 
+      // window.localStorage.setItem(
+      //   'loggedBlogappUser', JSON.stringify(user)
+      // )
+      setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
+      console.error(exception)
       console.log('wrong credentials')
     }
   }
