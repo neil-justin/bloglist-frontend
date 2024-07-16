@@ -51,8 +51,10 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      console.error(exception)
-      console.log('wrong credentials')
+      setNotificationMessage('wrong username or password')
+      setTimeout(() => {
+        setNotificationMessage('')
+      }, 5000)
     }
   }
 
@@ -95,6 +97,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to app</h2>
+        <Notification message={notificationMessage} />
         <LoginForm
           username={username}
           onUsernameChange={handleUsernameChange}
