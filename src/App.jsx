@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
-import { getAll, setToken } from './services/blogs'
+import { getAll, setToken, create } from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
+import NewBlogForm from './components/NewBlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
 
   useEffect(() => {
     getAll()
@@ -62,6 +66,22 @@ const App = () => {
     setPassword(e.target.value)
   }
 
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value)
+  }
+
+  const handleAuthorChange = (e) => {
+    setAuthor(e.target.value)
+  }
+
+  const handleUrlChange = (e) => {
+    setUrl(e.target.value)
+  }
+
+  const handleCreateBlog = (blog) => {
+    create(blog)
+  }
+
   if (user === null) {
     return <LoginForm
       username={username}
@@ -82,6 +102,16 @@ const App = () => {
           onClick={handleLogout}
         >logout</button>
       </p>
+      <h2>create new</h2>
+      <NewBlogForm
+        title={title}
+        onTitleChange={handleTitleChange}
+        author={author}
+        onAuthorChange={handleAuthorChange}
+        url={url}
+        onUrlChange={handleUrlChange}
+        onCreateBlog={handleCreateBlog}
+      />
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
