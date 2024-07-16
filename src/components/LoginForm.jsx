@@ -7,7 +7,6 @@ const LoginForm = ({
 }) => {
     return (
         <div>
-            <h2>Log in to app</h2>
             <form onSubmit={onHandleLogin}>
                 <div>
                     username {' '}

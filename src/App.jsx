@@ -83,13 +83,18 @@ const App = () => {
   }
 
   if (user === null) {
-    return <LoginForm
-      username={username}
-      onUsernameChange={handleUsernameChange}
-      password={password}
-      onPasswordChange={handlePasswordChange}
-      onHandleLogin={handleLogin}
-    />
+    return (
+      <div>
+        <h2>Log in to app</h2>
+        <LoginForm
+          username={username}
+          onUsernameChange={handleUsernameChange}
+          password={password}
+          onPasswordChange={handlePasswordChange}
+          onHandleLogin={handleLogin}
+        />
+      </div>
+    )
   }
 
   return (
