@@ -9,7 +9,7 @@ const NewBlogForm = ({
 }) => {
     return (
         <div>
-            <form onSubmit={() => onCreateBlog({ title, author, url })}>
+            <form onSubmit={(e) => onCreateBlog(e, { title, author, url })}>
                 <div>
                     {'title: '}
                     <input

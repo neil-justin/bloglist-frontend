@@ -4,6 +4,9 @@ import { getAll, setToken, create } from './services/blogs'
 import loginService from './services/login'
 import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
+import Notification from './components/Notification'
+
+import './app.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -13,6 +16,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [notificationMessage, setNotificationMessage] = useState('')
 
   useEffect(() => {
     getAll()
@@ -78,8 +82,13 @@ const App = () => {
     setUrl(e.target.value)
   }
 
-  const handleCreateBlog = (blog) => {
-    create(blog)
+  const handleCreateBlog = async (e, blog) => {
+    e.preventDefault()
+    await create(blog)
+    setNotificationMessage(`a new blog titled ${blog.title} is added`)
+    setTimeout(() => {
+      setNotificationMessage('')
+    }, 5000)
   }
 
   if (user === null) {
@@ -100,6 +109,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <Notification message={notificationMessage} />
       <p>
         {user.name} logged in {' '}
         <button
