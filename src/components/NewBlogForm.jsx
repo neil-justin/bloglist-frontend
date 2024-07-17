@@ -1,14 +1,28 @@
+import { useState } from "react"
+
 const NewBlogForm = ({
-    title,
-    onTitleChange,
-    author,
-    onAuthorChange,
-    url,
-    onUrlChange,
     onCreateBlog
 }) => {
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [url, setUrl] = useState('')
+
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value)
+    }
+
+    const handleAuthorChange = (e) => {
+        setAuthor(e.target.value)
+    }
+
+    const handleUrlChange = (e) => {
+        setUrl(e.target.value)
+    }
+
     return (
         <div>
+            <h2>create new</h2>
             <form onSubmit={(e) => onCreateBlog(e, { title, author, url })}>
                 <div>
                     {'title: '}
@@ -16,7 +30,7 @@ const NewBlogForm = ({
                         type="text"
                         value={title}
                         name="Title"
-                        onChange={onTitleChange}
+                        onChange={handleTitleChange}
                     />
                 </div>
                 <div>
@@ -25,7 +39,7 @@ const NewBlogForm = ({
                         type="text"
                         value={author}
                         name="Author"
-                        onChange={onAuthorChange}
+                        onChange={handleAuthorChange}
                     />
                 </div>
                 <div>
@@ -34,7 +48,7 @@ const NewBlogForm = ({
                         type="text"
                         value={url}
                         name="Url"
-                        onChange={onUrlChange}
+                        onChange={handleUrlChange}
                     />
                 </div>
                 <button type="submit">create</button>
