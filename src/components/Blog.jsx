@@ -1,9 +1,10 @@
 import { useState } from "react"
-import { put } from "../services/blogs"
+import { put, remove } from "../services/blogs"
 
 const Blog = ({
   blog,
-  onBlogUpdate
+  onBlogUpdate,
+  onBlogRemoval
 }) => {
   const [shouldHideDetails, setShouldHideDetails] = useState(true)
 
@@ -17,6 +18,15 @@ const Blog = ({
     const blog = { ...blogExceptUser, likes: blogExceptUser.likes + 1 }
     const updatedBlog = await put(blog)
     onBlogUpdate(updatedBlog)
+  }
+
+  const handleRemoveBlogClick = async (e, blog) => {
+    const shouldDeleteBlog = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)
+
+    if (shouldDeleteBlog) {
+      await remove(blog)
+      onBlogRemoval(blog)
+    }
   }
 
   if (shouldHideDetails) {
@@ -36,6 +46,7 @@ const Blog = ({
       likes {blog.likes} {' '}
       <button onClick={(e) => handleLikeButtonClick(e, blog)}>like</button> <br />
       {blog.author} <br />
+      <button onClick={(e) => handleRemoveBlogClick(e, blog)}>remove</button>
     </p>
   )
 }

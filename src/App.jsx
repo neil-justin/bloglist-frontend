@@ -97,6 +97,11 @@ const App = () => {
     setBlogs(nextBlogs)
   }
 
+  const handleBlogRemoval = (removedBlog) => {
+    const nextBlogs = blogs.filter(blog => blog.id !== removedBlog.id)
+    setBlogs(nextBlogs)
+  }
+
   const handleSortBlogsClick = (e) => {
     // sorted by likes, in descending order
     const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
@@ -141,6 +146,7 @@ const App = () => {
           key={blog.id}
           blog={blog}
           onBlogUpdate={handleBlogUpdate}
+          onBlogRemoval={handleBlogRemoval}
         />
       )}
     </div>
