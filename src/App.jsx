@@ -72,11 +72,14 @@ const App = () => {
     setPassword(e.target.value)
   }
 
-  const handleCreateBlog = async (e, blog) => {
+  const handleCreateBlog = async (e, blogDetails) => {
     e.preventDefault()
     newBlogFormRef.current.toggleVisibility()
-    await create(blog)
-    setNotificationMessage(`a new blog titled ${blog.title} is added`)
+
+    const dbBlog = await create(blogDetails)
+
+    setBlogs([...blogs, dbBlog])
+    setNotificationMessage(`a new blog titled ${dbBlog.title} is added`)
     setTimeout(() => {
       setNotificationMessage('')
     }, 5000)
