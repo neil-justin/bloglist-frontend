@@ -97,6 +97,12 @@ const App = () => {
     setBlogs(nextBlogs)
   }
 
+  const handleSortBlogsClick = (e) => {
+    // sorted by likes, in descending order
+    const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
+    setBlogs(sortedBlogs)
+  }
+
   if (user === null) {
     return (
       <div>
@@ -129,6 +135,7 @@ const App = () => {
           onCreateBlog={handleCreateBlog}
         />
       </Togglable>
+      <button onClick={handleSortBlogsClick}>sort blogs - descending</button>
       {blogs.map(blog =>
         <Blog
           key={blog.id}
