@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
-import { useState } from "react"
-import { put, remove } from "../services/blogs"
+import { useState } from 'react'
+import { put, remove } from '../services/blogs'
 
 const Blog = ({
   blog,

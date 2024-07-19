@@ -1,11 +1,11 @@
 const Notification = ({ message }) => {
-    if (message.length > 0) {
-        return (
-            <p className='notification'>{message}</p>
-        )
-    }
+  if (message.length > 0) {
+    return (
+      <p className='notification'>{message}</p>
+    )
+  }
 
-    return null
+  return null
 }
 
 export default Notification
