@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import { useState } from "react"
 import { put, remove } from "../services/blogs"
 
@@ -49,6 +51,12 @@ const Blog = ({
       <button onClick={(e) => handleRemoveBlogClick(e, blog)}>remove</button>
     </p>
   )
+}
+
+Blog.propTypes = {
+  blog: PropTypes.object.isRequired,
+  onBlogUpdate: PropTypes.func.isRequired,
+  onBlogRemoval: PropTypes.func.isRequired
 }
 
 export default Blog
