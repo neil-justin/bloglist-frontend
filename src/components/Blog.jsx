@@ -41,7 +41,7 @@ const Blog = ({
   }
 
   return (
-    <p className="blog-card">
+    <p className="blog-card" data-testid="blog-card">
       {blog.title} {' '}
       <button onClick={handleButtonDetailsClick}>hide</button> <br />
       {blog.url} <br />
