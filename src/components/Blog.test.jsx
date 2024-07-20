@@ -4,7 +4,7 @@ import Blog from './Blog'
 import userEvent from '@testing-library/user-event'
 
 describe('<Blog />', () => {
-  // passing these mock function prevents prop type warning
+  // passing these mock function prevent prop type warning
   const mockHandleBlogUpdate = vi.fn()
   const mockhandleBlogRemoval = vi.fn()
   const blog = {
