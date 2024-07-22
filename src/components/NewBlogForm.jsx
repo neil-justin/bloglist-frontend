@@ -20,10 +20,14 @@ const NewBlogForm = ({
     setUrl(e.target.value)
   }
 
+  const handleBlogSubmission = (e) => {
+    onCreateBlog(e, { title, author, url })
+  }
+
   return (
     <div>
       <h2>create new</h2>
-      <form onSubmit={(e) => onCreateBlog(e, { title, author, url })}>
+      <form onSubmit={(e) => handleBlogSubmission(e)} data-testid='new-blogform'>
         <div>
           {'title: '}
           <input
@@ -31,6 +35,7 @@ const NewBlogForm = ({
             value={title}
             name="Title"
             onChange={handleTitleChange}
+            placeholder='title'
           />
         </div>
         <div>
@@ -40,6 +45,7 @@ const NewBlogForm = ({
             value={author}
             name="Author"
             onChange={handleAuthorChange}
+            placeholder='author'
           />
         </div>
         <div>
@@ -49,6 +55,7 @@ const NewBlogForm = ({
             value={url}
             name="Url"
             onChange={handleUrlChange}
+            placeholder='url'
           />
         </div>
         <button type="submit">create</button>

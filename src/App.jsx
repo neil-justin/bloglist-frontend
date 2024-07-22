@@ -73,6 +73,7 @@ const App = () => {
   }
 
   const handleCreateBlog = async (e, blogDetails) => {
+    console.log(blogDetails)
     e.preventDefault()
     newBlogFormRef.current.toggleVisibility()
 

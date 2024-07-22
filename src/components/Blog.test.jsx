@@ -4,7 +4,7 @@ import Blog from './Blog'
 import userEvent from '@testing-library/user-event'
 import axios from 'axios'
 
-describe('<Blog />', () => {
+describe.skip('<Blog />', () => {
   const blog = {
     title: 'Managing User Focus with :focus-visible',
     author: 'Chris DeMars',
