@@ -33,7 +33,7 @@ const Blog = ({
 
   if (shouldHideDetails) {
     return (
-      <p className="blog-card">
+      <p className="blog-card" data-testid="blog-card">
         {blog.title} {blog.author} {' '}
         <button onClick={handleButtonDetailsClick}>view</button>
       </p>
