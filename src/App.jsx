@@ -142,14 +142,19 @@ const App = () => {
         />
       </Togglable>
       <button onClick={handleSortBlogsClick}>sort blogs - descending</button>
-      {blogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-          onBlogUpdate={handleBlogUpdate}
-          onBlogRemoval={handleBlogRemoval}
-        />
-      )}
+      <div className='blog-cards'>
+        {blogs.map(blog =>
+          <p className="blog-card"
+            data-testid={`blog-${blog.id}`}
+            key={blog.id}>
+            <Blog
+              blog={blog}
+              onBlogUpdate={handleBlogUpdate}
+              onBlogRemoval={handleBlogRemoval}
+            />
+          </p>
+        )}
+      </div>
     </div>
   )
 }

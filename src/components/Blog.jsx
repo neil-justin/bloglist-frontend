@@ -33,23 +33,23 @@ const Blog = ({
 
   if (shouldHideDetails) {
     return (
-      <p className="blog-card" data-testid="blog-card">
+      <>
         {blog.title} {blog.author} {' '}
         <button onClick={handleButtonDetailsClick}>view</button>
-      </p>
+      </>
     )
   }
 
   return (
-    <p className="blog-card" data-testid="blog-card">
+    <>
       {blog.title} {' '}
       <button onClick={handleButtonDetailsClick}>hide</button> <br />
       {blog.url} <br />
-      likes {blog.likes} {' '}
+      likes <span data-testid='likescount'>{blog.likes} </span>
       <button onClick={(e) => handleLikeButtonClick(e, blog)}>like</button> <br />
       {blog.author} <br />
       <button onClick={(e) => handleRemoveBlogClick(e, blog)}>remove</button>
-    </p>
+    </>
   )
 }
 
