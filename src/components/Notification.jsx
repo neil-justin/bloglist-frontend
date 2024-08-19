@@ -1,8 +1,12 @@
-const Notification = ({ message }) => {
-  if (message.length > 0) {
+import { useSelector } from 'react-redux'
+
+const Notification = () => {
+  const notification = useSelector((state) => state.notification)
+
+  if (notification.message.length > 0) {
     return (
       <p className="notification" data-testid="notification-element">
-        {message}
+        {notification.message}
       </p>
     )
   }

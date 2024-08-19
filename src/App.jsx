@@ -8,13 +8,17 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 
 import './app.css'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
 
 const App = () => {
+  const dispatch = useDispatch()
+
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [notificationMessage, setNotificationMessage] = useState('')
+  // const [notificationMessage, setNotificationMessage] = useState('')
 
   const newBlogFormRef = useRef()
 
@@ -47,10 +51,7 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
-      setNotificationMessage('wrong username or password')
-      setTimeout(() => {
-        setNotificationMessage('')
-      }, 5000)
+      dispatch(setNotification('wrong username or password'))
     }
   }
 
@@ -76,10 +77,7 @@ const App = () => {
     const dbBlog = await create(blogDetails)
 
     setBlogs([...blogs, dbBlog])
-    setNotificationMessage(`a new blog titled ${dbBlog.title} is added`)
-    setTimeout(() => {
-      setNotificationMessage('')
-    }, 5000)
+    dispatch(setNotification(`a new blog titled ${dbBlog.title} is added`))
   }
 
   const handleBlogUpdate = (updatedBlog) => {
@@ -109,7 +107,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to app</h2>
-        <Notification message={notificationMessage} />
+        <Notification />
         <LoginForm
           username={username}
           onUsernameChange={handleUsernameChange}
@@ -124,7 +122,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notification message={notificationMessage} />
+      <Notification />
       <p>
         {user.name} logged in{' '}
         <button type="button" onClick={handleLogout}>
