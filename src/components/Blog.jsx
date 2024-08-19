@@ -3,11 +3,7 @@ import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { put, remove } from '../services/blogs'
 
-const Blog = ({
-  blog,
-  onBlogUpdate,
-  onBlogRemoval
-}) => {
+const Blog = ({ blog, onBlogUpdate, onBlogRemoval }) => {
   const [shouldHideDetails, setShouldHideDetails] = useState(true)
 
   const handleButtonDetailsClick = (e) => {
@@ -23,7 +19,9 @@ const Blog = ({
   }
 
   const handleRemoveBlogClick = async (e, blog) => {
-    const shouldDeleteBlog = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)
+    const shouldDeleteBlog = window.confirm(
+      `Remove blog ${blog.title} by ${blog.author}?`,
+    )
 
     if (shouldDeleteBlog) {
       await remove(blog)
@@ -34,7 +32,7 @@ const Blog = ({
   if (shouldHideDetails) {
     return (
       <>
-        {blog.title} {blog.author} {' '}
+        {blog.title} {blog.author}{' '}
         <button onClick={handleButtonDetailsClick}>view</button>
       </>
     )
@@ -42,11 +40,12 @@ const Blog = ({
 
   return (
     <>
-      {blog.title} {' '}
-      <button onClick={handleButtonDetailsClick}>hide</button> <br />
+      {blog.title} <button onClick={handleButtonDetailsClick}>hide</button>{' '}
+      <br />
       {blog.url} <br />
-      likes <span data-testid='likescount'>{blog.likes} </span>
-      <button onClick={(e) => handleLikeButtonClick(e, blog)}>like</button> <br />
+      likes <span data-testid="likescount">{blog.likes} </span>
+      <button onClick={(e) => handleLikeButtonClick(e, blog)}>like</button>{' '}
+      <br />
       {blog.author} <br />
       <button onClick={(e) => handleRemoveBlogClick(e, blog)}>remove</button>
     </>
@@ -56,7 +55,7 @@ const Blog = ({
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
   onBlogUpdate: PropTypes.func.isRequired,
-  onBlogRemoval: PropTypes.func.isRequired
+  onBlogRemoval: PropTypes.func.isRequired,
 }
 
 export default Blog

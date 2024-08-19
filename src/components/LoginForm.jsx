@@ -3,13 +3,13 @@ const LoginForm = ({
   onUsernameChange,
   password,
   onPasswordChange,
-  onHandleLogin
+  onHandleLogin,
 }) => {
   return (
     <div>
       <form onSubmit={onHandleLogin}>
         <div>
-          username {' '}
+          username{' '}
           <input
             type="text"
             value={username}
@@ -19,7 +19,7 @@ const LoginForm = ({
           />
         </div>
         <div>
-          password {' '}
+          password{' '}
           <input
             type="text"
             value={password}
@@ -28,10 +28,9 @@ const LoginForm = ({
             data-testid="password-input"
           />
         </div>
-        <button
-          type="submit"
-          data-testid="login-button"
-        >login</button>
+        <button type="submit" data-testid="login-button">
+          login
+        </button>
       </form>
     </div>
   )

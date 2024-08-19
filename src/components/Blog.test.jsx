@@ -9,7 +9,7 @@ describe.skip('<Blog />', () => {
     title: 'Managing User Focus with :focus-visible',
     author: 'Chris DeMars',
     url: 'https://css-tricks.com/managing-user-focus-with-focus-visible/',
-    likes: 12
+    likes: 12,
   }
   // passing these mock function prevent prop type warning
   let mockHandleBlogUpdate
@@ -19,11 +19,13 @@ describe.skip('<Blog />', () => {
   beforeEach(() => {
     mockHandleBlogUpdate = vi.fn()
     mockhandleBlogRemoval = vi.fn()
-    container = render(<Blog
-      blog={blog}
-      onBlogUpdate={mockHandleBlogUpdate}
-      onBlogRemoval={mockhandleBlogRemoval}
-    />)
+    container = render(
+      <Blog
+        blog={blog}
+        onBlogUpdate={mockHandleBlogUpdate}
+        onBlogRemoval={mockhandleBlogRemoval}
+      />,
+    )
   })
 
   afterEach(async () => {
@@ -31,7 +33,9 @@ describe.skip('<Blog />', () => {
   })
 
   test('renders only the blog\'s title and author', () => {
-    const element = screen.getByText('Managing User Focus with :focus-visible Chris DeMars')
+    const element = screen.getByText(
+      'Managing User Focus with :focus-visible Chris DeMars',
+    )
     expect(element).toBeDefined()
   })
 
@@ -43,7 +47,9 @@ describe.skip('<Blog />', () => {
     const blogCardElement = screen.getByTestId('blog-card')
 
     screen.debug()
-    expect(blogCardElement).toHaveTextContent('https://css-tricks.com/managing-user-focus-with-focus-visible/')
+    expect(blogCardElement).toHaveTextContent(
+      'https://css-tricks.com/managing-user-focus-with-focus-visible/',
+    )
     expect(blogCardElement).toHaveTextContent('likes ')
   })
 

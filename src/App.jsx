@@ -19,10 +19,7 @@ const App = () => {
   const newBlogFormRef = useRef()
 
   useEffect(() => {
-    getAll()
-      .then(blogs =>
-        setBlogs(blogs)
-      )
+    getAll().then((blogs) => setBlogs(blogs))
   }, [])
 
   useEffect(() => {
@@ -40,12 +37,11 @@ const App = () => {
 
     try {
       const user = await loginService.login({
-        username, password,
+        username,
+        password,
       })
 
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       setToken(user.token)
       setUser(user)
       setUsername('')
@@ -99,7 +95,7 @@ const App = () => {
   }
 
   const handleBlogRemoval = (removedBlog) => {
-    const nextBlogs = blogs.filter(blog => blog.id !== removedBlog.id)
+    const nextBlogs = blogs.filter((blog) => blog.id !== removedBlog.id)
     setBlogs(nextBlogs)
   }
 
@@ -130,30 +126,29 @@ const App = () => {
       <h2>blogs</h2>
       <Notification message={notificationMessage} />
       <p>
-        {user.name} logged in {' '}
-        <button
-          type="button"
-          onClick={handleLogout}
-        >logout</button>
+        {user.name} logged in{' '}
+        <button type="button" onClick={handleLogout}>
+          logout
+        </button>
       </p>
-      <Togglable buttonLabel='new blog' ref={newBlogFormRef}>
-        <NewBlogForm
-          onCreateBlog={handleCreateBlog}
-        />
+      <Togglable buttonLabel="new blog" ref={newBlogFormRef}>
+        <NewBlogForm onCreateBlog={handleCreateBlog} />
       </Togglable>
       <button onClick={handleSortBlogsClick}>sort blogs - descending</button>
-      <div className='blog-cards'>
-        {blogs.map(blog =>
-          <p className="blog-card"
+      <div className="blog-cards">
+        {blogs.map((blog) => (
+          <p
+            className="blog-card"
             data-testid={`blog-${blog.id}`}
-            key={blog.id}>
+            key={blog.id}
+          >
             <Blog
               blog={blog}
               onBlogUpdate={handleBlogUpdate}
               onBlogRemoval={handleBlogRemoval}
             />
           </p>
-        )}
+        ))}
       </div>
     </div>
   )
