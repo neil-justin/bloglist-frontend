@@ -12,15 +12,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { createBlog, initializeBlogs } from './reducers/blogReducer'
 import { setShouldSort } from './reducers/sortReducer'
+import { loginUser, setUser } from './reducers/userReducer'
 
 const App = () => {
-  const sorted = useSelector(state => state.sorted)
+  const sorted = useSelector((state) => state.sorted)
   const blogs = useSelector((state) => state.blogs)
+  const user = useSelector((state) => state.user)
+
   const dispatch = useDispatch()
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
   // const [notificationMessage, setNotificationMessage] = useState('')
 
   const newBlogFormRef = useRef()
@@ -37,8 +40,11 @@ const App = () => {
 
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+
+      dispatch(setUser(user))
       setToken(user.token)
+      // setUser(user)
+      // setToken(user.token)
     }
   }, [])
 
@@ -46,14 +52,14 @@ const App = () => {
     e.preventDefault()
 
     try {
-      const user = await loginService.login({
-        username,
-        password,
-      })
-
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      setToken(user.token)
-      setUser(user)
+      // const user = await loginService.login({
+      //   username,
+      //   password,
+      // })
+      dispatch(loginUser({ username, password }))
+      // window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      // setToken(user.token)
+      // setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -64,7 +70,8 @@ const App = () => {
   const handleLogout = (e) => {
     window.localStorage.removeItem('loggedBlogappUser')
     setToken(null)
-    setUser(null)
+    dispatch(setUser(null))
+    // setUser(null)
   }
 
   const handleUsernameChange = (e) => {
@@ -82,7 +89,6 @@ const App = () => {
     dispatch(createBlog(blogDetails))
     dispatch(setNotification(`a new blog titled ${blogDetails.title} is added`))
   }
-
 
   const handleSortBlogsClick = (e) => {
     dispatch(setShouldSort())
@@ -125,9 +131,7 @@ const App = () => {
             data-testid={`blog-${blog.id}`}
             key={blog.id}
           >
-            <Blog
-              blog={blog}
-            />
+            <Blog blog={blog} />
           </p>
         ))}
       </div>
