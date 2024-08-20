@@ -11,8 +11,10 @@ import './app.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { createBlog, initializeBlogs } from './reducers/blogReducer'
+import { setShouldSort } from './reducers/sortReducer'
 
 const App = () => {
+  const sorted = useSelector(state => state.sorted)
   const blogs = useSelector((state) => state.blogs)
   const dispatch = useDispatch()
 
@@ -22,6 +24,9 @@ const App = () => {
   // const [notificationMessage, setNotificationMessage] = useState('')
 
   const newBlogFormRef = useRef()
+
+  const descendinglySortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
+  const blogsToDisplay = sorted ? descendinglySortedBlogs : blogs
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -80,9 +85,7 @@ const App = () => {
 
 
   const handleSortBlogsClick = (e) => {
-    // sorted by likes, in descending order
-    const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
-    setBlogs(sortedBlogs)
+    dispatch(setShouldSort())
   }
 
   if (user === null) {
@@ -116,7 +119,7 @@ const App = () => {
       </Togglable>
       <button onClick={handleSortBlogsClick}>sort blogs - descending</button>
       <div className="blog-cards">
-        {blogs.map((blog) => (
+        {blogsToDisplay.map((blog) => (
           <p
             className="blog-card"
             data-testid={`blog-${blog.id}`}
