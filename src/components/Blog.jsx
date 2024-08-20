@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types'
 
 import { useState } from 'react'
-import { put, remove } from '../services/blogs'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { useDispatch } from 'react-redux'
 
-const Blog = ({ blog, onBlogUpdate, onBlogRemoval }) => {
+const Blog = ({ blog }) => {
+  const dispatch = useDispatch()
+
   const [shouldHideDetails, setShouldHideDetails] = useState(true)
 
   const handleButtonDetailsClick = (e) => {
@@ -11,11 +14,9 @@ const Blog = ({ blog, onBlogUpdate, onBlogRemoval }) => {
   }
 
   const handleLikeButtonClick = async (e, oldBlog) => {
-    // this copied the oldBlog object except for its "user" prop
     const { user, ...blogExceptUser } = oldBlog
     const blog = { ...blogExceptUser, likes: blogExceptUser.likes + 1 }
-    const updatedBlog = await put(blog)
-    onBlogUpdate(updatedBlog)
+    dispatch(likeBlog(blog))
   }
 
   const handleRemoveBlogClick = async (e, blog) => {
@@ -24,8 +25,7 @@ const Blog = ({ blog, onBlogUpdate, onBlogRemoval }) => {
     )
 
     if (shouldDeleteBlog) {
-      await remove(blog)
-      onBlogRemoval(blog)
+      dispatch(deleteBlog(blog))
     }
   }
 
@@ -54,8 +54,6 @@ const Blog = ({ blog, onBlogUpdate, onBlogRemoval }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  onBlogUpdate: PropTypes.func.isRequired,
-  onBlogRemoval: PropTypes.func.isRequired,
 }
 
 export default Blog

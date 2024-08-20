@@ -8,13 +8,14 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 
 import './app.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
+import { createBlog, initializeBlogs } from './reducers/blogReducer'
 
 const App = () => {
+  const blogs = useSelector((state) => state.blogs)
   const dispatch = useDispatch()
 
-  const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
@@ -23,7 +24,7 @@ const App = () => {
   const newBlogFormRef = useRef()
 
   useEffect(() => {
-    getAll().then((blogs) => setBlogs(blogs))
+    dispatch(initializeBlogs())
   }, [])
 
   useEffect(() => {
@@ -70,32 +71,13 @@ const App = () => {
   }
 
   const handleCreateBlog = async (e, blogDetails) => {
-    console.log(blogDetails)
     e.preventDefault()
     newBlogFormRef.current.toggleVisibility()
 
-    const dbBlog = await create(blogDetails)
-
-    setBlogs([...blogs, dbBlog])
-    dispatch(setNotification(`a new blog titled ${dbBlog.title} is added`))
+    dispatch(createBlog(blogDetails))
+    dispatch(setNotification(`a new blog titled ${blogDetails.title} is added`))
   }
 
-  const handleBlogUpdate = (updatedBlog) => {
-    const nextBlogs = blogs.map((blog) => {
-      if (blog.id === updatedBlog.id) {
-        return updatedBlog
-      } else {
-        return blog
-      }
-    })
-
-    setBlogs(nextBlogs)
-  }
-
-  const handleBlogRemoval = (removedBlog) => {
-    const nextBlogs = blogs.filter((blog) => blog.id !== removedBlog.id)
-    setBlogs(nextBlogs)
-  }
 
   const handleSortBlogsClick = (e) => {
     // sorted by likes, in descending order
@@ -142,8 +124,6 @@ const App = () => {
           >
             <Blog
               blog={blog}
-              onBlogUpdate={handleBlogUpdate}
-              onBlogRemoval={handleBlogRemoval}
             />
           </p>
         ))}
