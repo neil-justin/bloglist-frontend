@@ -12,7 +12,6 @@ const blogSlice = createSlice({
       return action.payload
     },
     like(state, action) {
-      console.log('action', action)
       const id = action.payload.id
       const updatedState = state.map((blog) => {
         if (blog.id === id) return action.payload

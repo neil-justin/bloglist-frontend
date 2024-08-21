@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { setUser } from './userReducer'
 import { getUsers } from '../services/users'
 
 const usersSlice = createSlice({
