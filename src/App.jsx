@@ -8,21 +8,23 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { loginUser, setUser } from './reducers/userReducer'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useMatch } from 'react-router-dom'
 import Users from './components/Users'
 import Home from './components/Home'
 import { initializeUsers } from './reducers/usersReducer'
+import UserBlogs from './components/UserBlogs'
 
 const App = () => {
+  const users = useSelector(state => state.users)
   const user = useSelector((state) => state.user)
-
   const dispatch = useDispatch()
+
+  const match = useMatch('/users/:id')
+  const chosenUser = match ? users.find(user =>
+    user.id === match.params.id) : null
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  // const [user, setUser] = useState(null)
-  // const [notificationMessage, setNotificationMessage] = useState('')
-
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -37,8 +39,6 @@ const App = () => {
 
       dispatch(setUser(user))
       setToken(user.token)
-      // setUser(user)
-      // setToken(user.token)
     }
   }, [])
 
@@ -46,14 +46,7 @@ const App = () => {
     e.preventDefault()
 
     try {
-      // const user = await loginService.login({
-      //   username,
-      //   password,
-      // })
       dispatch(loginUser({ username, password }))
-      // window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
-      // setToken(user.token)
-      // setUser(user)
       setUsername('')
       setPassword('')
     } catch (exception) {
@@ -65,7 +58,6 @@ const App = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setToken(null)
     dispatch(setUser(null))
-    // setUser(null)
   }
 
   const handleUsernameChange = (e) => {
@@ -106,6 +98,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/users' element={<Users />} />
+        <Route path='users/:id' element={<UserBlogs user={chosenUser}/>} />
       </Routes>
     </div>
   )
