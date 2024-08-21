@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
-import { useState } from 'react'
-import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { useEffect, useState } from 'react'
+import { likeBlog, deleteBlog, initializeBlogs } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
 
 const Blog = ({ blog }) => {

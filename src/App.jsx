@@ -1,22 +1,19 @@
-import { useState, useEffect, useRef } from 'react'
-import Blog from './components/Blog'
-import { getAll, setToken, create } from './services/blogs'
-import loginService from './services/login'
+import { useState, useEffect } from 'react'
+import { setToken } from './services/blogs'
 import LoginForm from './components/LoginForm'
-import NewBlogForm from './components/NewBlogForm'
 import Notification from './components/Notification'
-import Togglable from './components/Togglable'
 
 import './app.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
-import { createBlog, initializeBlogs } from './reducers/blogReducer'
-import { setShouldSort } from './reducers/sortReducer'
+import { initializeBlogs } from './reducers/blogReducer'
 import { loginUser, setUser } from './reducers/userReducer'
+import { Route, Routes } from 'react-router-dom'
+import Users from './components/Users'
+import Home from './components/Home'
+import { initializeUsers } from './reducers/usersReducer'
 
 const App = () => {
-  const sorted = useSelector((state) => state.sorted)
-  const blogs = useSelector((state) => state.blogs)
   const user = useSelector((state) => state.user)
 
   const dispatch = useDispatch()
@@ -26,13 +23,10 @@ const App = () => {
   // const [user, setUser] = useState(null)
   // const [notificationMessage, setNotificationMessage] = useState('')
 
-  const newBlogFormRef = useRef()
-
-  const descendinglySortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes)
-  const blogsToDisplay = sorted ? descendinglySortedBlogs : blogs
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   }, [])
 
   useEffect(() => {
@@ -82,18 +76,6 @@ const App = () => {
     setPassword(e.target.value)
   }
 
-  const handleCreateBlog = async (e, blogDetails) => {
-    e.preventDefault()
-    newBlogFormRef.current.toggleVisibility()
-
-    dispatch(createBlog(blogDetails))
-    dispatch(setNotification(`a new blog titled ${blogDetails.title} is added`))
-  }
-
-  const handleSortBlogsClick = (e) => {
-    dispatch(setShouldSort())
-  }
-
   if (user === null) {
     return (
       <div>
@@ -120,21 +102,11 @@ const App = () => {
           logout
         </button>
       </p>
-      <Togglable buttonLabel="new blog" ref={newBlogFormRef}>
-        <NewBlogForm onCreateBlog={handleCreateBlog} />
-      </Togglable>
-      <button onClick={handleSortBlogsClick}>sort blogs - descending</button>
-      <div className="blog-cards">
-        {blogsToDisplay.map((blog) => (
-          <p
-            className="blog-card"
-            data-testid={`blog-${blog.id}`}
-            key={blog.id}
-          >
-            <Blog blog={blog} />
-          </p>
-        ))}
-      </div>
+
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/users' element={<Users />} />
+      </Routes>
     </div>
   )
 }
