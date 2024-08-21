@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
-import Blog from './Blog'
+import BlogTitle from './BlogTitle'
 import userEvent from '@testing-library/user-event'
 import axios from 'axios'
 
-describe.skip('<Blog />', () => {
+describe.skip('<BlogTitle />', () => {
   const blog = {
     title: 'Managing User Focus with :focus-visible',
     author: 'Chris DeMars',
@@ -20,7 +20,7 @@ describe.skip('<Blog />', () => {
     mockHandleBlogUpdate = vi.fn()
     mockhandleBlogRemoval = vi.fn()
     container = render(
-      <Blog
+      <BlogTitle
         blog={blog}
         onBlogUpdate={mockHandleBlogUpdate}
         onBlogRemoval={mockhandleBlogRemoval}

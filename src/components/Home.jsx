@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import Blog from './Blog'
+import BlogTitle from './BlogTitle'
 import NewBlogForm from './NewBlogForm'
 import Togglable from './Togglable'
 import { useDispatch, useSelector } from 'react-redux'
@@ -43,7 +43,7 @@ const Home = () => {
             data-testid={`blog-${blog.id}`}
             key={blog.id}
           >
-            <Blog blog={blog} />
+            <BlogTitle blog={blog} />
           </p>
         ))}
       </div>

@@ -13,6 +13,7 @@ import Users from './components/Users'
 import Home from './components/Home'
 import { initializeUsers } from './reducers/usersReducer'
 import UserBlogs from './components/UserBlogs'
+import BlogDetails from './components/BlogDetails'
 
 const App = () => {
   const users = useSelector(state => state.users)
@@ -99,6 +100,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/users' element={<Users />} />
         <Route path='users/:id' element={<UserBlogs user={chosenUser}/>} />
+        <Route path='/blogs/:id' element={<BlogDetails />} />
       </Routes>
     </div>
   )
