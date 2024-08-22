@@ -38,4 +38,9 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
+const getComments = async (id) => {
+  const request = await axios.get(`${baseUrl}/${id}/comments`)
+  return request.data
+}
+
 export { setToken, create, put, remove, getAll }
