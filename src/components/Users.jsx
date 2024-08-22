@@ -6,7 +6,7 @@ const Users = () => {
 
   return (
     <>
-      <h3>Users</h3>
+      <h2>Users</h2>
       <table>
         <tbody>
           <tr>
