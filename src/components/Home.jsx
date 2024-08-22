@@ -32,6 +32,7 @@ const Home = () => {
 
   return (
     <>
+      <h2>blogs</h2>
       <Togglable buttonLabel="new blog" ref={newBlogFormRef}>
         <NewBlogForm onCreateBlog={handleCreateBlog} />
       </Togglable>

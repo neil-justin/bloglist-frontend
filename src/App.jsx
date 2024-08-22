@@ -14,6 +14,7 @@ import Home from './components/Home'
 import { initializeUsers } from './reducers/usersReducer'
 import UserBlogs from './components/UserBlogs'
 import BlogDetails from './components/BlogDetails'
+import Menu from './components/Menu'
 
 const App = () => {
   const users = useSelector(state => state.users)
@@ -55,12 +56,6 @@ const App = () => {
     }
   }
 
-  const handleLogout = (e) => {
-    window.localStorage.removeItem('loggedBlogappUser')
-    setToken(null)
-    dispatch(setUser(null))
-  }
-
   const handleUsernameChange = (e) => {
     setUsername(e.target.value)
   }
@@ -87,14 +82,8 @@ const App = () => {
 
   return (
     <div>
-      <h2>blogs</h2>
       <Notification />
-      <p>
-        {user.name} logged in{' '}
-        <button type="button" onClick={handleLogout}>
-          logout
-        </button>
-      </p>
+      <Menu />
 
       <Routes>
         <Route path='/' element={<Home />} />
