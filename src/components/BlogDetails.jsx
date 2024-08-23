@@ -1,14 +1,26 @@
-import { useSelector } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useMatch } from 'react-router-dom'
+import { submitComment } from '../reducers/blogReducer'
 
 const BlogDetails = () => {
+  const [comment, setComment] = useState('')
+
   const blogs = useSelector((state) => state.blogs)
+  const dispatch = useDispatch()
 
   const match = useMatch('/blogs/:id')
   const chosenBlog = match ? blogs.find(blog =>
     blog.id === match.params.id) : null
 
-  console.log('chosenBlog', chosenBlog)
+  const handleCommentChange = e => {
+    setComment(e.target.value)
+  }
+
+  const handleCommentSubmission = e => {
+    e.preventDefault()
+    dispatch(submitComment(chosenBlog, comment))
+  }
 
   if (!chosenBlog) return null
 
@@ -22,6 +34,16 @@ const BlogDetails = () => {
       </p>
 
       <h3>comments</h3>
+      <form onSubmit={handleCommentSubmission}>
+        <input
+          type="text"
+          value={comment}
+          onChange={handleCommentChange}
+        />
+        {' '}
+        <button type="submit">add comment</button>
+      </form>
+
       <ul>
         {chosenBlog.comments.map((comment, index) => (
           <li key={index}>{comment}</li>

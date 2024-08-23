@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { create, getAll, put, remove } from '../services/blogs'
+import { create, getAll, put, remove, putComments } from '../services/blogs'
 
 const blogSlice = createSlice({
   name: 'blog',
@@ -25,10 +25,19 @@ const blogSlice = createSlice({
       const updatedState = state.filter((blog) => blog.id !== id)
       return updatedState
     },
+    setComments(state, action) {
+      const id = action.payload.id
+      const updatedState = state.map((blog) => {
+        if (blog.id === id) return action.payload
+        return blog
+      })
+
+      return updatedState
+    }
   },
 })
 
-export const { appendBlog, setBlogs, like, removeBlog } =
+export const { appendBlog, setBlogs, like, removeBlog, setComments } =
   blogSlice.actions
 
 const initializeBlogs = () => {
@@ -59,5 +68,13 @@ const deleteBlog = (blog) => {
   }
 }
 
-export { initializeBlogs, createBlog, likeBlog, deleteBlog }
+const submitComment = (blog, comment) => {
+  return async (dispatch) => {
+    const updatedBlog = { ...blog, comments: blog.comments.concat(comment) }
+    const promisedBlog = await putComments(updatedBlog)
+    dispatch(setComments(promisedBlog))
+  }
+}
+
+export { initializeBlogs, createBlog, likeBlog, deleteBlog, submitComment }
 export default blogSlice.reducer

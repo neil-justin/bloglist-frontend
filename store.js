@@ -11,7 +11,7 @@ const store = configureStore({
     notification: notificationReducer,
     sorted: sortReducer,
     user: userReducer,
-    users: usersReducer
+    users: usersReducer,
   },
 })
 

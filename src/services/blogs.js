@@ -38,9 +38,9 @@ const getAll = () => {
   return request.then((response) => response.data)
 }
 
-const getComments = async (id) => {
-  const request = await axios.get(`${baseUrl}/${id}/comments`)
-  return request.data
+const putComments = async updatedBlog => {
+  const response = await axios.put(`${baseUrl}/${updatedBlog.id}`, updatedBlog)
+  return response.data
 }
 
-export { setToken, create, put, remove, getAll }
+export { setToken, create, put, remove, getAll, putComments }
